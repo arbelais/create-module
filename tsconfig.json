@@ -1,0 +1,16 @@
+{
+    "include": ["src/**/*", "tests/**/*"],
+    "exclude": ["templates/**/*"],
+    "compilerOptions": {
+        "rootDir": "src",
+        "outDir": "bin",
+        "strict": true,
+        "target": "ES2020",
+        "module": "NodeNext",
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "moduleResolution": "NodeNext",
+        "allowSyntheticDefaultImports": true,
+        "types": ["vitest/globals"]
+    }
+}

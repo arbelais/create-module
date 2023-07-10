@@ -1,0 +1,12 @@
+.idea
+node_modules/
+jspm_packages/
+
+bin
+dist
+web_modules/
+
+*.tsbuildinfo\
+*.bak
+.yarn/
+.env
