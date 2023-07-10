@@ -23,6 +23,6 @@ jobs:
               id: pack
 
             - name: Publish package
-              run: yarn publish ${{ steps.pack.outputs.tarballPath }}
+              run: yarn publish ${{ steps.pack.outputs.tarballPath }} --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
