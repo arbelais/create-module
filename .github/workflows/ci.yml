@@ -42,14 +42,14 @@ jobs:
               with:
                   node-version: '18.x'
                   registry-url: 'https://registry.npmjs.org'
-              if: ${{ steps.release.outputs.release_created }}
+                  always-auth: true
             - run: yarn
             - run: yarn build
             - name: Pack package
               run: yarn pack
               id: pack
             - name: Publish package
-              run: yarn publish ${{ steps.pack.outputs.tarballPath }} --access public
+              run: yarn publish ${{ steps.pack.outputs.tarballPath }}
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
             - name: tag stable versions
