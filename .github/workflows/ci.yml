@@ -27,9 +27,37 @@ jobs:
             - run: yarn lint
 
             - run: yarn test
+
+    bump-version:
+        name: 'Bump Version on main'
+        runs-on: ubuntu-latest
+        permissions: write-all
+        needs: tests
+
+        steps:
+            - name: 'Checkout source code'
+              uses: 'actions/checkout@v2'
+              with:
+                  ref: ${{ github.ref }}
+            - name: 'cat package.json'
+              run: cat ./package.json
+            - name: 'Automated Version Bump'
+              id: version-bump
+              uses: 'phips28/gh-action-bump-version@master'
+              with:
+                  tag-prefix: 'v'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: 'cat package.json'
+              run: cat ./package.json
+            - name: 'Output Step'
+              env:
+                  NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
+              run: echo "new tag $NEW_TAG"
+
     release:
         runs-on: ubuntu-latest
-        needs: tests
+        needs: bump-version
         steps:
             - uses: google-github-actions/release-please-action@v3
               id: release
