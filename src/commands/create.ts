@@ -4,13 +4,13 @@ import { fileURLToPath } from 'url';
 import { Command } from 'commander';
 import * as z from 'zod';
 import ora from 'ora';
-import inquirer from 'inquirer';
 import { logger } from '../utils/logger.js';
 import {
     moduleTemplate,
     viewTemplate,
     routerTemplate,
 } from '../utils/templates.js';
+import { promptModuleName, promptOverwrite } from '../utils/prompt.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,31 +19,6 @@ const optsSchema = z.object({
     name: z.string().optional(),
     overwrite: z.boolean().default(false),
 });
-
-async function promptModuleName(): Promise<string> {
-    const answers: Record<string, string> = await inquirer.prompt([
-        {
-            type: 'input',
-            name: 'moduleName',
-            message: 'Enter the module name:',
-        },
-    ]);
-
-    return answers.moduleName;
-}
-
-async function promptOverwrite(): Promise<boolean> {
-    const answers: Record<string, boolean> = await inquirer.prompt([
-        {
-            type: 'confirm',
-            name: 'overwrite',
-            message: 'Module already exists. Do you want to overwrite it?',
-            default: false,
-        },
-    ]);
-
-    return answers.overwrite;
-}
 
 export async function createModule(
     name?: string,
