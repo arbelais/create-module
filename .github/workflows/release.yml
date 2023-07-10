@@ -8,10 +8,14 @@ jobs:
     publish-npm:
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v3
+
             - run: yarn build
+
             - name: Pack package
               run: yarn pack
               id: pack
+
             - name: Publish package
               run: yarn publish ${{ steps.pack.outputs.tarballPath }}
               env:
