@@ -1,6 +1,6 @@
 {
     "name": "@arbelaism/create-module",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "license": "MIT",
     "type": "module",
     "main": "dist/app.js",
