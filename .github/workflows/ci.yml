@@ -30,6 +30,7 @@ jobs:
 
     release:
         runs-on: ubuntu-latest
+        permissions: write-all
         steps:
             - uses: google-github-actions/release-please-action@v3
               id: release
