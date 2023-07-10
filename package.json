@@ -23,13 +23,12 @@
         "test:watch": "vitest -w",
         "start": "vite-node src/app.ts --",
         "start:watch": "vite-node -w src/app.ts --",
-        "build": "tsup && cp -R templates dist/",
+        "build": "tsup",
         "clean": "rm -rf ./node_modules ./dist ./yarn.lock && yarn install"
     },
     "dependencies": {
         "chalk": "^5.2.0",
         "commander": "^10.0.0",
-        "dotenv": "^16.0.3",
         "figlet": "^1.5.2",
         "fs-extra": "^11.1.1",
         "inquirer": "^9.1.4",
