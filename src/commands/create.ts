@@ -16,7 +16,7 @@ const optsSchema = z.object({
 });
 
 async function promptModuleName(): Promise<string> {
-    const answers = await inquirer.prompt([
+    const answers: Record<string, string> = await inquirer.prompt([
         {
             type: 'input',
             name: 'moduleName',
@@ -28,7 +28,7 @@ async function promptModuleName(): Promise<string> {
 }
 
 async function promptOverwrite(): Promise<boolean> {
-    const answers = await inquirer.prompt([
+    const answers: Record<string, boolean> = await inquirer.prompt([
         {
             type: 'confirm',
             name: 'overwrite',
@@ -74,8 +74,7 @@ export async function createModule(
         const routerPath = path.join(modulePath, 'router.ts');
 
         // Templates
-        const templatePath = path.join(__dirname, 'templates');
-        console.log(templatePath);
+        const templatePath = path.join(rootDir, 'templates');
         const viewTemplatePath = path.join(templatePath, 'View.template.vue');
         const routerTemplatePath = path.join(
             templatePath,
@@ -99,6 +98,7 @@ export async function createModule(
                     );
                     return;
                 }
+
                 await fs.rm(modulePath, { recursive: true });
             }
         }

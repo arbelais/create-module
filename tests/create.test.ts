@@ -3,6 +3,7 @@ import { existsSync, promises as fs } from 'fs';
 import * as path from 'path';
 import { createModule } from '../src/commands/create.js';
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const MODULE_NAME = 'home';
 
 describe('Create Module Command', () => {

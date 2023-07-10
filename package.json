@@ -17,8 +17,7 @@
     "repository": "https://github.com/arbelais/create-module",
     "homepage": "https://github.com/arbelais/create-module#readme",
     "scripts": {
-        "lint": "eslint src tests",
-        "lint:fix": "eslint src tests --fix",
+        "lint": "eslint 'src/**'",
         "prettier": "prettier --write src test",
         "test": "vitest --no-watch",
         "test:watch": "vitest -w",

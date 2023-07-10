@@ -14,7 +14,7 @@ async function main() {
         .name('nc-vue-module')
         .description('Simple CLI tool for create new modules in Vue')
         .version(
-            packageInfo.version || '1.0.0',
+            packageInfo.version ?? '1.0.0',
             '-v, --version',
             'display the version number'
         );
@@ -24,4 +24,4 @@ async function main() {
     program.parse();
 }
 
-main();
+void main();

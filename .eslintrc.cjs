@@ -1,5 +1,11 @@
+/** @type {import('@types/eslint').Linter.BaseConfig} */
 module.exports = {
     extends: ['xo', 'xo-typescript/space', 'prettier'],
+    parserOptions: {
+        parser: '@typescript-eslint/parser',
+        project: './tsconfig.json',
+        tsconfigRootDir: __dirname,
+    },
     overrides: [
         {
             files: ['*'],
