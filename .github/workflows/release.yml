@@ -1,0 +1,24 @@
+name: Publish NPM Package
+
+on:
+    release:
+        types: [created]
+
+jobs:
+    publish-npm:
+        runs-on: ubuntu-latest
+        steps:
+            - run: yarn build
+            - name: 'Automated Version Bump'
+              uses: 'phips28/gh-action-bump-version@master'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  tag-prefix: 'v'
+            - name: Pack package
+              run: yarn pack
+              id: pack
+            - name: Publish package
+              run: yarn publish ${{ steps.pack.outputs.tarballPath }}
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
