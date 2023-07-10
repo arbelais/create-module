@@ -21,7 +21,7 @@ describe('Create Module Command', () => {
 
         // Delete the module folder if it already exists
         if (existsSync(modulePath)) {
-            await fs.rmdir(modulePath, { recursive: true });
+            await fs.rm(modulePath, { recursive: true });
         }
 
         await createModule(MODULE_NAME);
@@ -39,6 +39,6 @@ describe('Create Module Command', () => {
         // expect(homeViewContent).toContain('<h1>{{ ModuleName }}</h1>');
 
         // Delete the module folder after the test
-        await fs.rmdir(modulePath, { recursive: true });
+        await fs.rm(modulePath, { recursive: true });
     });
 });

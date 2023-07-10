@@ -1,13 +1,18 @@
 import { existsSync, promises as fs } from 'fs';
 import * as path from 'path';
-import { fileURLToPath } from 'url'; // Add this import
+import { fileURLToPath } from 'url';
 import { Command } from 'commander';
 import * as z from 'zod';
 import ora from 'ora';
 import inquirer from 'inquirer';
 import { logger } from '../utils/logger.js';
+import {
+    moduleTemplate,
+    viewTemplate,
+    routerTemplate,
+} from '../utils/templates.js';
 
-const __filename = fileURLToPath(import.meta.url); // Add this line
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const optsSchema = z.object({
@@ -73,18 +78,6 @@ export async function createModule(
         const moduleVuePath = path.join(modulePath, 'Module.vue');
         const routerPath = path.join(modulePath, 'router.ts');
 
-        // Templates
-        const templatePath = path.join(rootDir, 'templates');
-        const viewTemplatePath = path.join(templatePath, 'View.template.vue');
-        const routerTemplatePath = path.join(
-            templatePath,
-            'router.template.ts'
-        );
-        const moduleVueTemplatePath = path.join(
-            templatePath,
-            'Module.template.vue'
-        );
-
         if (!existsSync(modulesPath)) {
             await fs.mkdir(modulesPath);
         }
@@ -108,31 +101,18 @@ export async function createModule(
 
         const spinner = ora(`Creating module "${moduleName}"`).start();
         try {
-            const viewTemplateContent = await fs.readFile(
-                viewTemplatePath,
-                'utf8'
-            );
-            const viewContent = viewTemplateContent.replace(
+            const viewContent = viewTemplate.replace(
                 '{{ ModuleName }}',
                 capitalizedModuleName
             );
 
-            const routerTemplateContent = await fs.readFile(
-                routerTemplatePath,
-                'utf8'
-            );
-            const routerContent = routerTemplateContent.replace(
+            const routerContent = routerTemplate.replace(
                 /{{ ModuleName }}/g,
                 capitalizedModuleName
             );
 
-            const moduleVueTemplateContent = await fs.readFile(
-                moduleVueTemplatePath,
-                'utf8'
-            );
-
             await fs.writeFile(moduleViewPath, viewContent);
-            await fs.writeFile(moduleVuePath, moduleVueTemplateContent);
+            await fs.writeFile(moduleVuePath, moduleTemplate);
             await fs.writeFile(routerPath, routerContent);
 
             spinner.succeed(`Module "${moduleName}" created successfully.`);
