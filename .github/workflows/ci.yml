@@ -48,7 +48,6 @@ jobs:
             - name: Pack package
               run: yarn pack
               id: pack
-              if: ${{ steps.release.outputs.release_created }}
             - name: Publish package
               run: yarn publish ${{ steps.pack.outputs.tarballPath }} --access public
               env:
