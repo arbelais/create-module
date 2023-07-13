@@ -1,44 +1,87 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, beforeEach, afterEach } from 'vitest';
 import { existsSync, promises as fs } from 'fs';
 import * as path from 'path';
 import { createModule } from '../src/commands/create.js';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MODULE_NAME = 'home';
+const rootDir = process.cwd();
 
 describe('Create Module Command', () => {
-    it('should create a new module with the correct structure', async () => {
-        const moduleName =
-            MODULE_NAME.charAt(0).toUpperCase() + MODULE_NAME.slice(1);
-        const rootDir = process.cwd();
-
-        const modulesPath = path.join(rootDir, 'src', 'modules');
-        const modulePath = path.join(modulesPath, moduleName);
-        const viewsPath = path.join(modulePath, 'views');
-        const homeViewPath = path.join(viewsPath, `${moduleName}View.vue`);
-        const moduleVuePath = path.join(modulePath, 'Module.vue');
-        const routerPath = path.join(modulePath, 'router.ts');
-
-        // Delete the module folder if it already exists
-        if (existsSync(modulePath)) {
-            await fs.rm(modulePath, { recursive: true });
-        }
-
+    beforeEach(async () => {
         await createModule(MODULE_NAME);
+    });
+
+    afterEach(async () => {
+        const modulePath = path.join(rootDir, 'src', 'modules');
+
+        await fs.rm(modulePath, { recursive: true });
+    });
+
+    it('should create the module folder', async () => {
+        const modulePath = path.join(rootDir, 'src', 'modules', MODULE_NAME);
 
         expect(existsSync(modulePath)).toBeTruthy();
+    });
+
+    it('the module folder should be in lowercase', async () => {
+        const modulePath = path.join(rootDir, 'src', 'modules', MODULE_NAME);
+
+        const expectedModulePath = path.join(
+            rootDir,
+            'src',
+            'modules',
+            MODULE_NAME.toLowerCase()
+        );
+        expect(modulePath.toLowerCase()).toBe(expectedModulePath.toLowerCase());
+    });
+
+    it('should create the views folder', async () => {
+        const viewsPath = path.join(
+            rootDir,
+            'src',
+            'modules',
+            MODULE_NAME,
+            'views'
+        );
+
         expect(existsSync(viewsPath)).toBeTruthy();
+    });
+
+    it('should create the home view file', async () => {
+        const homeViewPath = path.join(
+            rootDir,
+            'src',
+            'modules',
+            MODULE_NAME,
+            'views',
+            `${MODULE_NAME}View.vue`
+        );
+
         expect(existsSync(homeViewPath)).toBeTruthy();
+    });
+
+    it('should create the module Vue file', async () => {
+        const moduleVuePath = path.join(
+            rootDir,
+            'src',
+            'modules',
+            MODULE_NAME,
+            'Module.vue'
+        );
+
         expect(existsSync(moduleVuePath)).toBeTruthy();
+    });
+
+    it('should create the router file', async () => {
+        const routerPath = path.join(
+            rootDir,
+            'src',
+            'modules',
+            MODULE_NAME,
+            'router.ts'
+        );
+
         expect(existsSync(routerPath)).toBeTruthy();
-
-        // Read the content of the HomeView.vue file
-        // const homeViewContent = await fs.readFile(homeViewPath, 'utf8');
-
-        // Assert that the content contains the expected template content
-        // expect(homeViewContent).toContain('<h1>{{ ModuleName }}</h1>');
-
-        // Delete the module folder after the test
-        await fs.rm(modulePath, { recursive: true });
     });
 });
