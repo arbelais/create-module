@@ -43,7 +43,7 @@ export async function createModule(
             await fs.mkdir(modulesPath);
         }
 
-        const modulePath = path.join(modulesPath, capitalizedModuleName);
+        const modulePath = path.join(modulesPath, moduleName);
 
         const viewsPath = path.join(modulePath, 'views');
         const moduleViewPath = path.join(

@@ -1,8 +1,8 @@
 {
-    "include": ["src/**/*", "tests/**/*", ".eslintrc.cjs"],
+    "include": ["src/**/*", "tests/**/*"],
     "exclude": ["templates/**/*"],
     "compilerOptions": {
-        "rootDir": "src",
+        "rootDir": ".",
         "allowJs": true,
         "outDir": "dist",
         "strict": true,
@@ -12,6 +12,7 @@
         "esModuleInterop": true,
         "moduleResolution": "NodeNext",
         "allowSyntheticDefaultImports": true,
-        "types": ["vitest/globals"]
+        "types": ["vitest/globals"],
+        "baseUrl": "src"
     }
 }

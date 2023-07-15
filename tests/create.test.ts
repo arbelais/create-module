@@ -5,6 +5,8 @@ import { createModule } from '../src/commands/create.js';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MODULE_NAME = 'home';
+const capitalizedModuleName =
+    MODULE_NAME.charAt(0).toUpperCase() + MODULE_NAME.slice(1);
 const rootDir = process.cwd();
 
 describe('Create Module Command', () => {
@@ -55,10 +57,31 @@ describe('Create Module Command', () => {
             'modules',
             MODULE_NAME,
             'views',
-            `${MODULE_NAME}View.vue`
+            `${capitalizedModuleName}View.vue`
         );
 
         expect(existsSync(homeViewPath)).toBeTruthy();
+    });
+
+    it('the module view file should be capitalized', async () => {
+        const homeViewPath = path.join(
+            rootDir,
+            'src',
+            'modules',
+            MODULE_NAME,
+            'views',
+            `${capitalizedModuleName}View.vue`
+        );
+
+        const expectedHomeViewPath = path.join(
+            rootDir,
+            'src',
+            'modules',
+            MODULE_NAME,
+            'views',
+            `${capitalizedModuleName}View.vue`
+        );
+        expect(homeViewPath.toString()).toBe(expectedHomeViewPath.toString());
     });
 
     it('should create the module Vue file', async () => {
